@@ -1,0 +1,97 @@
+# PHP 8.1 module is enabled:
+# sudo a2enmod php8.1
+# sudo systemctl restart apache2
+# To verify that Apache is using PHP 8.1:
+# sudo systemctl restart apache2
+# php -v
+# Create the Website Directory
+# sudo mkdir -p /var/www/ip-site
+# sudo chown -R $USER:$USER /var/www/ip-site
+# Add a PHP test page:
+# echo "<?php phpinfo(); ?>" > /var/www/ip-site/index.php
+# echo "<?php phpinfo(); ?>" > /var/www/ip-site/index.php
+# Configure the Apache Virtual Host 
+# sudo nano /etc/apache2/sites-available/ip-site.conf
+# Paste this (replace YOUR_SERVER_IP with your real IP):
+<VirtualHost YOUR_SERVER_IP:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/ip-site
+    DirectoryIndex index.php index.html
+
+    <Directory /var/www/ip-site>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/ip-site_error.log
+    CustomLog ${APACHE_LOG_DIR}/ip-site_access.log combined
+</VirtualHost>
+# Enable the Site and Restart Apache
+# sudo a2ensite ip-site.conf
+# sudo systemctl reload apache2
+# Optional: Disable the default site
+# sudo a2dissite 000-default.conf
+# sudo systemctl reload apache2
+# Open a browser and go to:
+# http://YOUR_SERVER_IP
+----------------------------------------------------------------------------------------------
+#  Create the Web Directory
+
+   mkdir -p /home/psp/public_html
+echo "<?php phpinfo(); ?>" > /home/psp/public_html/index.php
+
+ Set proper permissions:
+
+         chmod -R 755 /home/psp/public_html
+
+         Ensure Apache can access your home directory:
+
+     chmod 755 /home/psp
+
+________________________________________________________________________________________________
+
+# configure using php or laravel project 
+
+  <VirtualHost *:80>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	ServerName url 
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /home/username/projects/url/public
+
+	<Directory /home/username/projects/url/public>
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		Require all granted
+	</Directory>
+
+	<FilesMatch \.php$>
+        SetHandler "proxy:unix:/var/run/php/userphpphp_version-fpm.sock|fcgi://localhost/"
+        #SetHandler "proxy:fcgi://localhost:9002"
+	</FilesMatch>
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog /home/username/projects/logs/error.log
+	CustomLog /home/username/projects/logs/access.log combined
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

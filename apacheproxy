@@ -1,0 +1,23 @@
+#sudo a2enmod proxy
+#sudo a2enmod proxy_http
+#Optional modules (depending on use-case):
+#sudo a2enmod proxy_balancer
+#sudo a2enmod lbmethod_byrequests
+#sudo a2enmod rewrite
+#sudo systemctl restart apache2
+# Edit Your Virtual Host Configuration
+# /etc/apache2/sites-available/your-site.conf
+#Here's a basic example of a virtual host with a reverse proxy:
+
+<VirtualHost *:80>
+    ServerName example.com
+    ServerAlias www.example.com
+
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3000/
+    ProxyPassReverse / http://localhost:3000/
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
