@@ -1,0 +1,133 @@
+account recover
+
+
+Attach Windows Server 2019 ISO and boot from it.
+
+Choose Repair your computer.
+
+Go to Troubleshoot > Command Prompt.
+
+Find the drive where Windows is installed. It’s usually D: or C:.
+
+Type:
+
+cmd
+Copy
+Edit
+dir D:\
+Look for Windows folder.
+
+Replace utilman.exe with cmd.exe:
+
+cmd
+Copy
+Edit
+move D:\Windows\System32\utilman.exe D:\Windows\System32\utilman.bak
+copy D:\Windows\System32\cmd.exe D:\Windows\System32\utilman.exe
+Reboot the server normally.
+
+At the login screen, click the Ease of Access (Accessibility) icon — it will open Command Prompt.
+
+From here, you can unlock the admin or create a new one:
+
+cmd
+Copy
+Edit
+net user administrator /active:yes
+net user administrator newpassword
+Or create a new account:
+
+cmd
+Copy
+Edit
+net user newadmin P@ssw0rd /add
+net localgroup administrators newadmin /add
+Log in with the modified or new account.
+
+Restore the original utilman.exe after you're in:
+
+cmd
+Copy
+Edit
+copy D:\Windows\System32\utilman.bak D:\Windows\System32\utilman.exe  
+
+
+NEW MEthod with stikey key
+
+
+ Step-by-Step Guide
+✅ Step 1: Boot into Windows Setup
+Plug in your bootable Windows 11 USB.
+
+Boot from the USB (use F12, Esc, or Del key during startup to open the boot menu).
+
+When the Windows setup screen loads, press:
+
+nginx
+Copy
+Edit
+Shift + F10
+This opens Command Prompt.
+
+✅ Step 2: Find Your Windows Drive
+Check which drive has Windows installed:
+
+bash
+Copy
+Edit
+diskpart
+list volume
+exit
+Suppose it's drive D:.
+
+✅ Step 3: Backup and Replace sethc.exe
+Now navigate to the Windows System32 folder and replace sethc.exe:
+
+bash
+Copy
+Edit
+cd D:\Windows\System32
+copy sethc.exe sethc.bak
+copy cmd.exe sethc.exe
+This saves the original Sticky Keys file as a backup (sethc.bak) and replaces it with cmd.exe.
+
+✅ Step 4: Reboot
+Remove the USB and reboot:
+
+bash
+Copy
+Edit
+wpeutil reboot
+✅ Step 5: Trigger the Hack
+At the login screen, press Shift 5 times.
+
+A Command Prompt will open instead of Sticky Keys.
+
+✅ Step 6: Reset Your Password
+See the user accounts:
+
+bash
+Copy
+Edit
+net user
+Reset the password:
+
+bash
+Copy
+Edit
+net user <username> <newpassword>
+Example:
+
+bash
+Copy
+Edit
+net user John123 mynewpass
+Now log in with the new password.
+
+✅ Step 7 (Optional): Restore Sticky Keys
+After logging in, restore the original Sticky Keys:
+
+bash
+Copy
+Edit
+copy C:\Windows\System32\sethc.bak C:\Windows\System32\sethc.exe
