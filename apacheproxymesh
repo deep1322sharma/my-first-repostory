@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+    ServerName 192.168.11.51
+
+    ProxyPreserveHost On
+
+    ProxyPass / http://localhost:444/
+    ProxyPassReverse / http://localhost:444/
+
+    # WebSocket proxy
+    RewriteEngine On
+    RewriteCond %{HTTP:Upgrade} =websocket [NC]
+    RewriteRule /(.*) ws://localhost:444/$1 [P,L]
+
+    RequestHeader set Connection "upgrade"
+    RequestHeader set Upgrade "websocket" env=HTTP_UPGRADE
+
+    ErrorLog ${APACHE_LOG_DIR}/meshcentral_error.log
+    CustomLog ${APACHE_LOG_DIR}/meshcentral_access.log combined
+</VirtualHost>
