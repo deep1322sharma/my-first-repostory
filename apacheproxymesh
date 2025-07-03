@@ -17,3 +17,40 @@
     ErrorLog ${APACHE_LOG_DIR}/meshcentral_error.log
     CustomLog ${APACHE_LOG_DIR}/meshcentral_access.log combined
 </VirtualHost>
+ 
+IF USE DOMAIN THEN USE THIS CONFIG
+
+
+<VirtualHost *:80>
+    ServerName mesh.example.com
+
+    # Redirect HTTP to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName mesh.example.com
+
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/mesh.example.com/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/mesh.example.com/privkey.pem
+
+    ProxyPreserveHost On
+
+    ProxyPass / http://localhost:444/
+    ProxyPassReverse / http://localhost:444/
+
+    # WebSocket proxy support
+    RewriteEngine On
+    RewriteCond %{HTTP:Upgrade} =websocket [NC]
+    RewriteRule /(.*) ws://localhost:444/$1 [P,L]
+
+    RequestHeader set Connection "upgrade"
+    RequestHeader set Upgrade "websocket" env=HTTP_UPGRADE
+
+    ErrorLog ${APACHE_LOG_DIR}/meshcentral_error.log
+    CustomLog ${APACHE_LOG_DIR}/meshcentral_access.log combined
+</VirtualHost>
+
