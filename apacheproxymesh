@@ -54,3 +54,55 @@ IF USE DOMAIN THEN USE THIS CONFIG
     CustomLog ${APACHE_LOG_DIR}/meshcentral_access.log combined
 </VirtualHost>
 
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________-----________________________---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# New file for proxy that is i test
+
+<VirtualHost *:80>
+    ServerName 192.168.11.37
+
+    ProxyPreserveHost On
+
+    ProxyPass / http://localhost:5678/
+    ProxyPassReverse / http://localhost:5678/
+
+    # WebSocket proxy
+    RewriteEngine On
+    RewriteCond %{HTTP:Upgrade} =websocket [NC]
+    RewriteRule /(.*) ws://localhost:5678/$1 [P,L]
+
+    RequestHeader set Connection "upgrade"
+    RequestHeader set Upgrade "websocket" env=HTTP_UPGRADE
+
+    ErrorLog ${APACHE_LOG_DIR}/n8n_error.log
+    CustomLog ${APACHE_LOG_DIR}/n8n_access.log combined
+</VirtualHost>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+#New file for proxy https 
+
+
+<VirtualHost *:443>
+    ServerName 192.168.11.37
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/n8n-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/n8n-selfsigned.key
+
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:5678/
+    ProxyPassReverse / http://localhost:5678/
+
+    # WebSocket support
+    RewriteEngine On
+    RewriteCond %{HTTP:Upgrade} =websocket [NC]
+    RewriteRule /(.*) ws://localhost:5678/$1 [P,L]
+
+    RequestHeader set Connection "upgrade"
+    RequestHeader set Upgrade "websocket" env=HTTP_UPGRADE
+
+    ErrorLog ${APACHE_LOG_DIR}/n8n_error.log
+    CustomLog ${APACHE_LOG_DIR}/n8n_access.log combined
+</VirtualHost>
