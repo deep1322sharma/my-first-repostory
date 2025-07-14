@@ -131,3 +131,72 @@ bash
 Copy
 Edit
 copy C:\Windows\System32\sethc.bak C:\Windows\System32\sethc.exe
+ Step 1: Boot Into Recovery Mode
+Option A: From Windows (if bootable)
+Go to Start > Power
+
+Hold Shift, then click Restart
+
+Choose Troubleshoot > Advanced Options > Command Prompt
+
+Option B: From USB (if Windows won't boot)
+Use a Windows Installation USB/DVD
+
+Boot from it, then click Repair your computer
+
+Go to Troubleshoot > Advanced Options > Command Prompt
+
+📁 Step 2: Replace utilman.exe with cmd.exe
+In the Command Prompt:
+
+c
+Copy
+Edit
+c:
+cd \windows\system32
+ren utilman.exe utilman.exe.bak
+copy cmd.exe utilman.exe
+✅ Now pressing Win + U at the login screen will launch Command Prompt as SYSTEM.
+
+🔐 Step 3: Reboot & Launch Admin CMD
+Restart your PC
+
+At the login screen, press Windows Key + U
+
+A Command Prompt window opens with SYSTEM privileges
+
+Now run:
+
+cmd
+Copy
+Edit
+net user Administrator /active:yes
+net user Administrator YourNewPassword123!
+This:
+
+Enables the built-in Administrator account
+
+Sets a new password
+
+♻️ Step 4: Restore utilman.exe
+To keep your system secure, restore the original file:
+
+Reboot into Recovery or use the same command prompt access again.
+
+Run:
+
+c
+Copy
+Edit
+cd \windows\system32
+del utilman.exe
+ren utilman.exe.bak utilman.exe
+✅ You're Done!
+You can now log in as Administrator using the new password you set.
+
+Optionally, disable the Administrator account later if you don’t want it always visible:
+
+cmd
+Copy
+Edit
+net user Administrator /active:no
