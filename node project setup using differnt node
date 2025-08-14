@@ -1,0 +1,92 @@
+23  sudo apt install curl
+   24  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+   25  \. "$HOME/.nvm/nvm.sh"
+   26  nvm install 16
+   27  nvm -v
+   28  node -v
+   29  npm -v
+   30  nvm -current
+   31  nvm current
+   32  nvm install 18
+   33  nvm
+   34  node -v
+   35  nvm current
+   36  nvm install 20
+   37  node -v
+   38  nvm install 22
+   39  node -v
+   40  nvm ls
+   41  ~/.nvm/versions/node/
+   42  ls ~/.nvm/versions/node/
+   43  which node
+   44  mkdir -p ~/nodeproject/public
+   45  ls
+   46  cd nodeproject/
+   47  ls
+   48  cd public/
+   49  mkdir node16p
+   50  ls
+   51  mkdir node18p
+   52  ls
+   53  mkdir node20p
+   54  mkdir node22p
+   55  ls
+   56  clear
+   57  cd node16p/
+   58  nvm use 16
+   59  echo "16" > .nvmrc
+   60  npm init -y
+   61  node -v
+   62  cd ..
+   63  cd node18p/
+   64  nvm use 18
+   65  echo "18" >.nvmrc
+   66  npm init -y
+   67  cd ..
+   68  cd node20p/
+   69  nvm use 20 echo "20" > .nvmrc npm init -y
+   70  nvm use 20
+   71  echo "20" > .nvmrc
+   72  init -y
+   73  npm init -y
+   74  cd ..
+   75  clear
+   76  cd node22p/
+   77  nvm use 22
+   78  echo "22" > .nvmrc
+   79  npm init -y
+   80  cd ..
+   81  clear
+   82  cd node16p/
+   83  nano index.js
+const http = require('http');
+const PORT = 3016;
+
+http.createServer((req, res) => {
+  res.end('Hello from Node 16!');
+}).listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+
+   84  cd ..
+   85  cd node18p/
+   86  nano index.js
+   87  cd ..
+   88  cd node20p/
+   89  nano index.js
+   90  cd ..
+   91  cd node22p/
+   92  nano index.js
+   93  cd
+   94  clear
+   95  nano ~/.bashrc
+load-nvmrc() {
+  if [ -f .nvmrc ]; then
+    nvm use > /dev/null
+  fi
+}
+export PROMPT_COMMAND="load-nvmrc; $PROMPT_COMMAND"
+
+   96  source ~/.bashrc
+   97  cd ~/nodeproject/public/node16p
+   98  node index.js
