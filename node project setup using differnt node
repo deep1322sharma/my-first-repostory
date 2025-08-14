@@ -76,7 +76,34 @@ http.createServer((req, res) => {
    89  nano index.js
    90  cd ..
    91  cd node22p/
-   92  nano index.js
+   92  nano index.js<VirtualHost *:80>
+    ServerName node16.local
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3016/
+    ProxyPassReverse / http://localhost:3016/
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName node18.local
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3018/
+    ProxyPassReverse / http://localhost:3018/
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName node20.local
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3020/
+    ProxyPassReverse / http://localhost:3020/
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName node22.local
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3022/
+    ProxyPassReverse / http://localhost:3022/
+</VirtualHost>
+
    93  cd
    94  clear
    95  nano ~/.bashrc
@@ -90,3 +117,4 @@ export PROMPT_COMMAND="load-nvmrc; $PROMPT_COMMAND"
    96  source ~/.bashrc
    97  cd ~/nodeproject/public/node16p
    98  node index.js
+
