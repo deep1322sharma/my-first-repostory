@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+    ServerName your-domain.com
+
+    # Exclude phpmyadmin from proxy
+    ProxyPass /phpmyadmin !
+
+    # Alias to phpmyadmin path
+    Alias /phpmyadmin /usr/share/phpmyadmin
+
+    <Directory /usr/share/phpmyadmin>
+        Options FollowSymLinks
+        DirectoryIndex index.php
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:3000/
+    ProxyPassReverse / http://localhost:3000/
+
+    ErrorLog ${APACHE_LOG_DIR}/myapp_error.log
+    CustomLog ${APACHE_LOG_DIR}/myapp_access.log combined
+</VirtualHost>
