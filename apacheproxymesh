@@ -106,3 +106,10 @@ ________________________________________________________________________________
     ErrorLog ${APACHE_LOG_DIR}/n8n_error.log
     CustomLog ${APACHE_LOG_DIR}/n8n_access.log combined
 </VirtualHost>
+#
+permission for site enable 
+sudo chmod -R /path/to/directory
+sudo chown -R www-data:www-data /path/to/directory
+# for laravel project more permision is 
+sudo chmod -R 775 storage bootstrap/cache
+sudo chown -R www-data:www-data storage bootstrap/cache
