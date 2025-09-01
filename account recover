@@ -1,0 +1,101 @@
+
+diskpart
+Then run:
+
+list volume
+This will show you something like:
+
+Volume ###  Ltr  Label        Fs     Type        Size     Status     Info
+----------  ---  -----------  -----  ----------  -------  ---------  --------
+Volume 0     D                NTFS   Partition     100 GB  Healthy    Boot
+Volume 1     E   Recovery     NTFS   Partition      20 GB  Healthy    Hidden
+Volume 2     C   Windows      NTFS   Partition     150 GB  Healthy    System
+2. Look for Clues in the Output
+You're trying to identify the partition where Windows is installed, so look for:
+
+Label: May say Windows
+
+
+✅ What You Need to Do
+🔁 Step 1: Exit DiskPart
+To access the System32 folder, you need to exit DiskPart and return to regular Command Prompt.
+
+In DiskPart, type:
+
+exit
+You’ll now be back at a normal X:\> or C:\> Command Prompt (depending on your environment).
+
+🧭 Step 2: Navigate to System32
+Now type:
+
+cd /d C:\Windows\System32
+Then confirm you’re there:
+
+dir
+You should see files like:
+
+cmd.exe
+drivers
+config
+...
+
+how to check net user
+
+To check user accounts on a Windows system using Command Prompt (CMD), use the net user command.
+
+✅ Basic Command to List All Users
+net user
+
+-------------------------------------------------------------------------------
+Administrator     DefaultAccount     Guest     John
+The command completed successfully.
+This shows all local user accounts on the system.
+
+✅ Get Detailed Info About a Specific User
+To view details about a particular user (e.g., John):
+
+net user John
+📋 This will show information like:
+Full name
+
+Account active status
+
+Password set or required
+
+Group memberships
+
+Last logon
+
+etc.
+
+\
+To activate the built-in Administrator account in Windows using Command Prompt, follow the appropriate method depending on whether you're in normal mode, safe mode, or recovery environment.
+
+✅ Method 1: Activate Administrator from CMD (with Admin Rights)
+If you're running CMD as administrator, use:
+
+net user Administrator /active:yes
+✅ Successful output:
+The command completed successfully.
+This enables the hidden built-in Administrator account.
+
+✅ Method 2: Set or Reset Password (Optional but Recommended)
+After activating the account, you should set a password:
+
+net user Administrator *
+It will prompt you to enter a new password (and confirm). You can also leave it blank by pressing Enter twice — but this is not secure.
+
+✅ Method 3: If You're in Windows Recovery Environment (WinRE)
+If you're in the Command Prompt via Windows installation media or recovery mode, the system drive letter (normally C:) might be different.
+
+Step-by-Step:
+Find the correct drive with Windows:
+
+dir C:\Windows
+dir D:\Windows
+dir E:\Windows
+Once found, open regedit:
+command for user
+net user
+net user administrator /active:yes
+net user administrator newpassword
