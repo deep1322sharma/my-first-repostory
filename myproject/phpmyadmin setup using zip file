@@ -1,0 +1,32 @@
+Download zip file from phpmyadmin site
+Then unzip the file on folder and rename it phpmyadmin
+create conf file in /etc/apache2/site-availble/ pma.local
+-----------------------------------------------------------
+pma.local file
+VirtualHost *:80>
+    ServerName pma.local
+
+    # Exclude phpmyadmin from proxy
+    ProxyPass /phpmyadmin !
+
+    # Alias to phpMyAdmin path (correct path for phpmyadmin subfolder)
+    Alias /phpmyadmin /home/lvm/myapp/pma.local/phpmyadmin
+
+    <Directory /home/lvm/myapp/pma.local/phpmyadmin>
+        Options FollowSymLinks
+        DirectoryIndex index.php
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+------------------------------------------------------------------------
+Enable site sudo a2ensite pma.local 
+sudo sytemctl reload apache2 and restart
+update etc/hosts file with pma.local
+set permission for directory
+hange ownership to www-data (Apache's user)
+sudo chown -R www-data:www-data /home/lvm/myapp/pma.local/phpmyadmin
+
+# Set directory and file permissions (ensure read and execute access)
+sudo chmod -R 755 /home/lvm/myapp/pma.local/phpmyadmin
+sudo tail -f /var/log/apache2/error.log check for error
