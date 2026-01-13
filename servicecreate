@@ -1,0 +1,16 @@
+[Unit]
+Description=MDM FastAPI Backend
+After=network.target
+
+[Service]
+User=mdm
+Group=mdm
+WorkingDirectory=/home/mdm/mdm
+Environment="PATH=/home/mdm/mdm/venv/bin"
+ExecStart=/home/mdm/mdm/venv/bin/gunicorn backend.app.main:app \
+  -k uvicorn.workers.UvicornWorker \
+  -b 127.0.0.1:8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
