@@ -1,0 +1,12 @@
+Download tar file for postman
+untar with command tar -xvz postman.tar
+move Postman to /opt sudo mv Postman /opt/
+create symlink sudo ln -s /opt/Postma/postman usr/local/bin/postman
+Create desktop file
+home/usr/.local/share/applications/postman.desktop
+[Desktop Entry]
+Name = Postman
+Exec = /opt/Postman/Postman
+Icon = /opt/Postman/app/resources/app/assets/icon.png
+Type = Application
+category = Devlopment;
